@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Gastos — Detalle</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="pagina-calculadora">
+
+  <div class="fondo-formas" aria-hidden="true">
+    <svg viewBox="0 0 400 700" preserveAspectRatio="xMidYMid slice">
+      <circle cx="200" cy="-120" r="400"></circle>
+      <circle cx="200" cy="820" r="400"></circle>
+    </svg>
+  </div>
+
+  <!-- Header Superior con Navegación -->
+ <header class="header-nav">
+  <div class="header-nav__contenedor">
+    <!-- Logo a la izquierda -->
+    <div class="header-nav__marca">
+      <span class="circulo-logo"></span>
+      <a href="index.html" class="header-nav__logo">calculadora de gastos</a>
+    </div>
+
+    <!-- Botón Hamburguesa para celulares -->
+    <button class="hamburguesa-btn" id="hamburguesa-btn" aria-label="Abrir menú">
+      <span class="hamburguesa-linea"></span>
+      <span class="hamburguesa-linea"></span>
+      <span class="hamburguesa-linea"></span>
+    </button>
+
+    <!-- Menú centralizado -->
+    <nav class="header-nav__menu" id="menu-navegacion">
+      <a href="index.html" class="nav-link-inicio">Inicio</a>
+      <a href="calculadora.html" class="link-protegido">Detalle</a>
+      <a href="historial.html" class="link-protegido">Historial</a>
+    </nav>
+
+    <!-- Usuario y Cerrar sesión a la derecha -->
+    <div class="header-nav__usuario" id="menu-usuario">
+      <span id="nombre-usuario-nav" class="nav-usuario-nombre">Usuario</span>
+      <button id="btn-cerrar-sesion" class="btn-cerrar-sesion-texto">Cerrar sesión</button>
+      <div class="avatar-circulo avatar-activo" id="btn-auth-nav"></div>
+    </div>
+  </div>
+</header>
+
+  <main class="contenedor">
+
+    <!-- Resumen rápido -->
+    <section class="resumen" aria-label="Resumen de gastos">
+      <div class="resumen__total">
+        <span class="resumen__etiqueta">Total gastado</span>
+        <span class="resumen__monto" id="total-gastado">$0,00</span>
+      </div>
+      <dl class="resumen__detalle">
+        <div class="resumen__item">
+          <dt>Registros</dt>
+          <dd id="cantidad-registros">0</dd>
+        </div>
+        <div class="resumen__item">
+          <dt>Categoría top</dt>
+          <dd id="categoria-top">—</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- 1. Sección Últimos movimientos (como indica el wireframe de detalle) -->
+    <section class="listado-seccion tarjeta-bloque" aria-label="Últimos movimientos">
+      <div class="listado-seccion__encabezado">
+        <h2 class="formulario-seccion__titulo">Últimos movimientos</h2>
+        <label class="filtro">
+          <select id="filtro-categoria">
+            <option value="todas">Todas las categorías</option>
+            <option value="Comida">Comida</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Vivienda">Vivienda</option>
+            <option value="Salud">Salud</option>
+            <option value="Ocio">Ocio</option>
+            <option value="Educación">Educación</option>
+            <option value="Otros">Otros</option>
+          </select>
+        </label>
+      </div>
+
+      <ul class="lista-gastos" id="lista-gastos"></ul>
+      <p class="lista-vacia" id="lista-vacia">Todavía no hay movimientos registrados.</p>
+    </section>
+
+    <!-- 2. Sección Carga de gastos (segundo bloque del wireframe de detalle) -->
+    <section class="formulario-seccion tarjeta-bloque" aria-label="Carga de gastos">
+      <h2 class="formulario-seccion__titulo">Carga de gastos</h2>
+      <form id="form-gasto" class="formulario-vertical" novalidate>
+
+        <div class="campo">
+          <label for="concepto">Detalles / Concepto</label>
+          <input type="text" id="concepto" name="concepto" placeholder="Ej: Supermercado, alquiler, nafta..." maxlength="40" required>
+          <span class="campo__error" id="error-concepto"></span>
+        </div>
+
+        <div class="campo-fila">
+          <div class="campo">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" name="categoria" required>
+              <option value="" disabled selected>Elegí una categoría</option>
+              <option value="Comida">Comida</option>
+              <option value="Transporte">Transporte</option>
+              <option value="Vivienda">Vivienda</option>
+              <option value="Salud">Salud</option>
+              <option value="Ocio">Ocio</option>
+              <option value="Educación">Educación</option>
+              <option value="Otros">Otros</option>
+            </select>
+            <span class="campo__error" id="error-categoria"></span>
+          </div>
+
+          <div class="campo">
+            <label for="monto">Monto</label>
+            <div class="campo__input-monto">
+              <span aria-hidden="true">$</span>
+              <input type="number" id="monto" name="monto" placeholder="0,00" min="0.01" step="0.01" required>
+            </div>
+            <span class="campo__error" id="error-monto"></span>
+          </div>
+        </div>
+
+        <button type="submit" class="boton-agregar">Registrar Gasto</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <p>Datos sincronizados de forma segura en tu navegador (localStorage).</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

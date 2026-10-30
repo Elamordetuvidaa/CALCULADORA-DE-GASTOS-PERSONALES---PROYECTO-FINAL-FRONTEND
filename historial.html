@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Gastos — Historial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="pagina-calculadora">
+
+  <div class="fondo-formas" aria-hidden="true">
+    <svg viewBox="0 0 400 700" preserveAspectRatio="xMidYMid slice">
+      <circle cx="200" cy="-120" r="400"></circle>
+      <circle cx="200" cy="820" r="400"></circle>
+    </svg>
+  </div>
+
+  <!-- Header Superior con Navegación -->
+  <header class="header-nav">
+  <div class="header-nav__contenedor">
+    <!-- Logo a la izquierda -->
+    <div class="header-nav__marca">
+      <span class="circulo-logo"></span>
+      <a href="index.html" class="header-nav__logo">calculadora de gastos</a>
+    </div>
+
+    <!-- Botón Hamburguesa para celulares -->
+    <button class="hamburguesa-btn" id="hamburguesa-btn" aria-label="Abrir menú">
+      <span class="hamburguesa-linea"></span>
+      <span class="hamburguesa-linea"></span>
+      <span class="hamburguesa-linea"></span>
+    </button>
+
+    <!-- Menú centralizado -->
+    <nav class="header-nav__menu" id="menu-navegacion">
+      <a href="index.html" class="nav-link-inicio">Inicio</a>
+      <a href="calculadora.html" class="link-protegido">Detalle</a>
+      <a href="historial.html" class="link-protegido">Historial</a>
+    </nav>
+
+    <!-- Usuario y Cerrar sesión a la derecha -->
+    <div class="header-nav__usuario" id="menu-usuario">
+      <span id="nombre-usuario-nav" class="nav-usuario-nombre">Usuario</span>
+      <button id="btn-cerrar-sesion" class="btn-cerrar-sesion-texto">Cerrar sesión</button>
+      <div class="avatar-circulo avatar-activo" id="btn-auth-nav"></div>
+    </div>
+  </div>
+</header>
+
+  <main class="contenedor">
+
+    <!-- Filtros de Búsqueda para el Historial -->
+    <section class="tarjeta-bloque" aria-label="Filtros de historial">
+      <h2 class="formulario-seccion__titulo">Filtrar Historial</h2>
+      <div class="filtros-historial-grid">
+        <div class="campo">
+          <label for="filtro-historial-cat">Categoría</label>
+          <select id="filtro-historial-cat">
+            <option value="todas">Todas las categorías</option>
+            <option value="Comida">Comida</option>
+            <option value="Transporte">Transporte</option>
+            <option value="Vivienda">Vivienda</option>
+            <option value="Salud">Salud</option>
+            <option value="Ocio">Ocio</option>
+            <option value="Educación">Educación</option>
+            <option value="Otros">Otros</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="filtro-historial-periodo">Período temporal</label>
+          <select id="filtro-historial-periodo">
+            <option value="todos">Todo el historial</option>
+            <option value="semana">Última semana (7 días)</option>
+            <option value="mes">Este mes actual</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resumen de la búsqueda / filtros -->
+    <section class="resumen" aria-label="Resumen de la búsqueda">
+      <div class="resumen__total">
+        <span class="resumen__etiqueta">Total filtrado</span>
+        <span class="resumen__monto" id="historial-total-filtrado">$0,00</span>
+      </div>
+      <dl class="resumen__detalle">
+        <div class="resumen__item">
+          <dt>Registros encontrados</dt>
+          <dd id="historial-cantidad">0</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- Desglose de sumas por categoría en la selección -->
+    <section class="tarjeta-bloque" aria-label="Desglose por categoría">
+      <h3 class="formulario-seccion__titulo" style="font-size: 1.2rem;">Sumas por categoría en el período</h3>
+      <ul class="lista-desglose-cat" id="desglose-categorias">
+        <!-- Se llena por JavaScript -->
+      </ul>
+      <p class="lista-vacia" id="desglose-vacio" style="display: block;">No hay datos para desglosar.</p>
+    </section>
+
+    <!-- Listado temporal filtrado -->
+    <section class="listado-seccion tarjeta-bloque" aria-label="Listado de movimientos filtrados">
+      <h3 class="formulario-seccion__titulo" style="font-size: 1.2rem;">Movimientos del período</h3>
+      <ul class="lista-gastos" id="lista-historial"></ul>
+      <p class="lista-vacia" id="historial-vacio">No se encontraron movimientos con los filtros seleccionados.</p>
+    </section>
+
+  </main>
+
+  <footer class="pie">
+    <p>Historial dinámico sincronizado en localStorage.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Gastos — Inicio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="pagina-landing">
+
+  <!-- Fondo de formas geométricas -->
+  <div class="fondo-formas" aria-hidden="true">
+    <svg viewBox="0 0 400 700" preserveAspectRatio="xMidYMid slice">
+      <circle cx="200" cy="-120" r="400"></circle>
+      <circle cx="200" cy="820" r="400"></circle>
+    </svg>
+  </div>
+
+  <!-- Header Superior con Navegación -->
+ <header class="header-nav">
+  <div class="header-nav__contenedor">
+    <!-- Logo a la izquierda -->
+    <div class="header-nav__marca">
+      <span class="circulo-logo"></span>
+      <a href="index.html" class="header-nav__logo">calculadora de gastos</a>
+    </div>
+
+    <!-- Botón Hamburguesa para celulares -->
+    <button class="hamburguesa-btn" id="hamburguesa-btn" aria-label="Abrir menú">
+      <span class="hamburguesa-linea"></span>
+      <span class="hamburguesa-linea"></span>
+      <span class="hamburguesa-linea"></span>
+    </button>
+
+    <!-- Menú centralizado -->
+    <nav class="header-nav__menu" id="menu-navegacion">
+      <a href="index.html" class="nav-link-inicio">Inicio</a>
+      <a href="calculadora.html" class="link-protegido">Detalle</a>
+      <a href="historial.html" class="link-protegido">Historial</a>
+    </nav>
+
+    <!-- Usuario y Cerrar sesión a la derecha -->
+    <div class="header-nav__usuario" id="menu-usuario">
+      <span id="nombre-usuario-nav" class="nav-usuario-nombre">Usuario</span>
+      <button id="btn-cerrar-sesion" class="btn-cerrar-sesion-texto">Cerrar sesión</button>
+      <div class="avatar-circulo avatar-activo" id="btn-auth-nav"></div>
+    </div>
+  </div>
+</header>
+
+  <!-- Contenido de la Landing (Inicio) -->
+  <main class="contenedor-landing">
+    <section class="hero-seccion">
+      <div class="hero-texto">
+        <h1 class="landing__titulo">Calculadora de Gastos</h1>
+        <p class="hero-subtitulo">Toma el control absoluto de tus finanzas personales</p>
+        <p class="hero-descripcion">Gestioná tus movimientos diarios, categoriza tus consumos y mantén tus cuentas claras de manera simple y rápida.</p>
+        <button id="btn-ingresar-gestor" class="landing__boton">Ingresar al gestor</button>
+      </div>
+      <div class="hero-tarjeta-ilustrativa">
+        <div class="tarjeta-visual-mockup">
+          <div class="mockup-linea larga"></div>
+          <div class="mockup-linea mediana"></div>
+          <div class="mockup-linea corta"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Funcionalidades Principales -->
+    <section class="funcionalidades-seccion">
+      <div class="funcionalidades-encabezado">
+        <h2 class="funcionalidades__titulo">Funcionalidades Principales</h2>
+        <p class="funcionalidades__subtitulo">Dar claridad sobre cada movimiento</p>
+      </div>
+      <div class="funcionalidades-grid">
+        <article class="card-funcionalidad">
+          <span class="card-punto"></span>
+          <h3>Registro Rápido</h3>
+          <p>Cargá tus gastos en segundos especificando categoría y monto exacto.</p>
+        </article>
+        <article class="card-funcionalidad">
+          <span class="card-punto"></span>
+          <h3>Revisa tus registros eliminados</h3>
+          <p>Mantén un control estricto de los movimientos que vas descartando.</p>
+        </article>
+        <article class="card-funcionalidad">
+          <span class="card-punto"></span>
+          <h3>Consultar Historial Temporal</h3>
+          <p>Filtra y analiza tus gastos segmentados por categorías y fechas.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal / Contenedor Flotante de Autenticación (Login / Registro) -->
+  <div id="modal-auth" class="modal-auth oculto">
+    <div class="modal-contenido">
+      <button id="cerrar-modal" class="modal__cerrar">✕</button>
+      
+      <!-- Formulario Login -->
+      <div id="seccion-login">
+        <h2 class="auth-titulo-modal">Iniciar Sesión</h2>
+        <form id="form-login" class="formulario-auth">
+          <div class="campo">
+            <label for="login-email">Correo electrónico</label>
+            <input type="email" id="login-email" placeholder="tu@correo.com" required>
+          </div>
+          <div class="campo">
+            <label for="login-password">Contraseña</label>
+            <input type="password" id="login-password" placeholder="••••••••" required>
+          </div>
+          <span class="campo__error" id="error-login"></span>
+          <button type="submit" class="landing__boton">Entrar</button>
+          <p class="auth-cambio">¿No tenés una cuenta? <a href="#" id="ir-a-registro">Registrate</a></p>
+        </form>
+      </div>
+
+      <!-- Formulario Registro -->
+      <div id="seccion-registro" class="oculto">
+        <h2 class="auth-titulo-modal">Crear Cuenta</h2>
+        <form id="form-registro" class="formulario-auth">
+          <div class="campo">
+            <label for="reg-nombre">Nombre</label>
+            <input type="text" id="reg-nombre" placeholder="Tu nombre" required>
+          </div>
+          <div class="campo">
+            <label for="reg-email">Correo electrónico</label>
+            <input type="email" id="reg-email" placeholder="tu@correo.com" required>
+          </div>
+          <div class="campo">
+            <label for="reg-password">Contraseña</label>
+            <input type="password" id="reg-password" placeholder="••••••••" required>
+          </div>
+          <span class="campo__error" id="error-registro"></span>
+          <button type="submit" class="landing__boton">Registrarse</button>
+          <p class="auth-cambio">¿Ya tenés cuenta? <a href="#" id="ir-a-login">Iniciá sesión</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
