@@ -423,24 +423,6 @@ body {
   gap: 14px;
 }
 
-.formulario-auth fieldset {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
-.formulario-auth legend {
-  margin-bottom: 14px;
-  padding: 0;
-  font-size: 0.85rem;
-  color: var(--tinta-suave);
-  font-weight: 600;
-}
-
 .auth-cambio {
   font-size: 0.8rem;
   color: var(--tinta-suave);

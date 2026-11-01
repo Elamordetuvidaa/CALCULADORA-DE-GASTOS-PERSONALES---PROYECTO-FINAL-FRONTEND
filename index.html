@@ -119,35 +119,29 @@
       </div>
 
       <!-- Formulario Registro -->
-      <section id="seccion-registro" class="oculto" aria-labelledby="titulo-registro">
-        <h2 id="titulo-registro" class="auth-titulo-modal">Crear Cuenta</h2>
-        <form id="form-registro" class="formulario-auth" aria-labelledby="titulo-registro">
-          <fieldset>
-            <legend>Datos de registro</legend>
-            <div class="campo">
-              <label for="reg-nombre">Nombre</label>
-              <input type="text" id="reg-nombre" name="nombre" autocomplete="name" placeholder="Tu nombre" required>
-            </div>
-            <div class="campo">
-              <label for="reg-email">Correo electrónico</label>
-              <input type="email" id="reg-email" name="email" autocomplete="email" placeholder="tu@correo.com" required>
-            </div>
-            <div class="campo">
-              <label for="reg-password">Contraseña</label>
-              <input type="password" id="reg-password" name="password" autocomplete="new-password" placeholder="••••••••" required>
-            </div>
-          </fieldset>
-          <span class="campo__error" id="error-registro" role="alert" aria-live="polite"></span>
+      <div id="seccion-registro" class="oculto">
+        <h2 class="auth-titulo-modal">Crear Cuenta</h2>
+        <form id="form-registro" class="formulario-auth">
+          <div class="campo">
+            <label for="reg-nombre">Nombre</label>
+            <input type="text" id="reg-nombre" placeholder="Tu nombre" required>
+          </div>
+          <div class="campo">
+            <label for="reg-email">Correo electrónico</label>
+            <input type="email" id="reg-email" placeholder="tu@correo.com" required>
+          </div>
+          <div class="campo">
+            <label for="reg-password">Contraseña</label>
+            <input type="password" id="reg-password" placeholder="••••••••" required>
+          </div>
+          <span class="campo__error" id="error-registro"></span>
           <button type="submit" class="landing__boton">Registrarse</button>
           <p class="auth-cambio">¿Ya tenés cuenta? <a href="#" id="ir-a-login">Iniciá sesión</a></p>
         </form>
-      </section>
+      </div>
     </div>
   </div>
 
-    <footer class="pie">
-    <p>&copy; 2026 Calculadora de Gastos - Grupo 9</p>
-  </footer>
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>

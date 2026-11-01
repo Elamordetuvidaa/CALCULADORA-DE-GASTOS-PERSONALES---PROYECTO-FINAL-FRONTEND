@@ -95,6 +95,41 @@
       </dl>
     </section>
 
+<!-- Dentro de historial.html, junto a la sección de filtros -->
+<section class="tarjeta-bloque" aria-label="Filtros y respaldo de historial">
+  <div class="listado-seccion__encabezado">
+    <h2 class="formulario-seccion__titulo" style="margin-bottom: 0;">Filtrar Historial</h2>
+    <button id="btn-exportar-json" class="landing__boton" style="padding: 8px 16px; font-size: 0.8rem;">
+         Generar respaldo
+    </button>
+  </div>
+  
+  <div class="filtros-historial-grid" style="margin-top: 16px;">
+    <div class="campo">
+      <label for="filtro-historial-cat">Categoría</label>
+      <select id="filtro-historial-cat">
+        <option value="todas">Todas las categorías</option>
+        <option value="Comida">Comida</option>
+        <option value="Transporte">Transporte</option>
+        <option value="Vivienda">Vivienda</option>
+        <option value="Salud">Salud</option>
+        <option value="Ocio">Ocio</option>
+        <option value="Educación">Educación</option>
+        <option value="Otros">Otros</option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label for="filtro-historial-periodo">Período temporal</label>
+      <select id="filtro-historial-periodo">
+        <option value="todos">Todo el historial</option>
+        <option value="semana">Última semana (7 días)</option>
+        <option value="mes">Este mes actual</option>
+      </select>
+    </div>
+  </div>
+</section>
+
     <!-- Desglose de sumas por categoría en la selección -->
     <section class="tarjeta-bloque" aria-label="Desglose por categoría">
       <h3 class="formulario-seccion__titulo" style="font-size: 1.2rem;">Sumas por categoría en el período</h3>
@@ -114,9 +149,9 @@
   </main>
 
   <footer class="pie">
-    <p>&copy; 2026 Calculadora de Gastos - Grupo 9</p>
+    <p>Historial dinámico sincronizado en localStorage.</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>

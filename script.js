@@ -226,6 +226,7 @@ if (formGasto) {
 // ============================================
 // 3. LÓGICA DE HISTORIAL (historial.html)
 // ============================================
+
 const listaHistorial = document.getElementById("lista-historial");
 if (listaHistorial) {
   if (!usuarioActivoEmail) {
@@ -420,3 +421,101 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// Funciones puras listas para pruebas
+export function calcularTotalGastos(gastos) {
+  return gastos.reduce((acc, g) => acc + g.monto, 0);
+}
+
+export function filtrarGastosPorPeriodo(gastos, periodo, referenciaFecha = new Date()) {
+  if (periodo === 'todos') return gastos;
+
+  return gastos.filter(gasto => {
+    const fechaGasto = new Date(gasto.id); // Usamos el timestamp del ID
+    if (periodo === 'semana') {
+      const hace7Dias = new Date(referenciaFecha);
+      hace7Dias.setDate(referenciaFecha.getDate() - 7);
+      return fechaGasto >= hace7Dias;
+    } else if (periodo === 'mes') {
+      return (
+        fechaGasto.getMonth() === referenciaFecha.getMonth() &&
+        fechaGasto.getFullYear() === referenciaFecha.getFullYear()
+      );
+    }
+    return true;
+  });
+}
+// ============================================
+// EXPORTAR HISTORIAL A JSON MEDIANTE FETCH
+// ============================================
+async function exportarHistorialJSONConFetch(usuarioEmail, gastos) {
+  const btnExportar = document.getElementById("btn-exportar-json");
+  
+  try {
+    if (btnExportar) {
+      btnExportar.textContent = "Procesando exportación...";
+      btnExportar.disabled = true;
+    }
+
+    if (!gastos || gastos.length === 0) {
+      alert("No hay gastos registrados para exportar.");
+      return;
+    }
+
+    const datosRespaldo = {
+      usuario: usuarioEmail,
+      fechaExportacion: new Date().toISOString(),
+      totalRegistros: gastos.length,
+      gastos: gastos
+    };
+
+    // 1. Convertimos los datos a un string JSON y creamos una URL de datos (data URI)
+    const jsonString = JSON.stringify(datosRespaldo, null, 2);
+    const dataUri = `data:application/json;charset=utf-8,${encodeURIComponent(jsonString)}`;
+
+    // 2. Ejecutamos un fetch simulando la petición al "endpoint" del archivo JSON
+    const respuestaFetch = await fetch(dataUri);
+    
+    if (!respuestaFetch.ok) {
+      throw new Error("Error en la respuesta del servidor simulado.");
+    }
+
+    // 3. Obtenemos el blob resultante de la petición fetch
+    const blobRespuesta = await respuestaFetch.blob();
+    const urlBlob = URL.createObjectURL(blobRespuesta);
+
+    // 4. Redirigimos la ejecución creando el enlace de descarga automática
+    const enlaceDescarga = document.createElement('a');
+    enlaceDescarga.href = urlBlob;
+    enlaceDescarga.download = `respaldo-gastos-${usuarioEmail.replace('@', '_at_')}.json`;
+    
+    document.body.appendChild(enlaceDescarga);
+    enlaceDescarga.click();
+    
+    document.body.removeChild(enlaceDescarga);
+    URL.revokeObjectURL(urlBlob);
+
+  } catch (error) {
+    console.error("Error al exportar mediante fetch:", error);
+    alert("Ocurrió un error al procesar la exportación.");
+  } finally {
+    if (btnExportar) {
+      btnExportar.textContent = "Generar respaldo";
+      btnExportar.disabled = false;
+    }
+  }
+}
+
+// Conectar el evento al botón dentro de la inicialización de historial
+const btnExportarJson = document.getElementById("btn-exportar-json");
+if (btnExportarJson) {
+  // Asegurarnos de que no duplique el evento si ya existía
+  btnExportarJson.replaceWith(btnExportarJson.cloneNode(true));
+  const nuevoBtnExportar = document.getElementById("btn-exportar-json");
+
+  nuevoBtnExportar.addEventListener("click", async () => {
+    const CLAVE_GASTOS = `mis-cuentas-gastos-${usuarioActivoEmail}`;
+    const gastosActuales = cargarGastos(CLAVE_GASTOS);
+    await exportarHistorialJSONConFetch(usuarioActivoEmail, gastosActuales);
+  });
+}
