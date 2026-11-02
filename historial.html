@@ -52,35 +52,6 @@
 
   <main class="contenedor">
 
-    <!-- Filtros de Búsqueda para el Historial -->
-    <section class="tarjeta-bloque" aria-label="Filtros de historial">
-      <h2 class="formulario-seccion__titulo">Filtrar Historial</h2>
-      <div class="filtros-historial-grid">
-        <div class="campo">
-          <label for="filtro-historial-cat">Categoría</label>
-          <select id="filtro-historial-cat">
-            <option value="todas">Todas las categorías</option>
-            <option value="Comida">Comida</option>
-            <option value="Transporte">Transporte</option>
-            <option value="Vivienda">Vivienda</option>
-            <option value="Salud">Salud</option>
-            <option value="Ocio">Ocio</option>
-            <option value="Educación">Educación</option>
-            <option value="Otros">Otros</option>
-          </select>
-        </div>
-
-        <div class="campo">
-          <label for="filtro-historial-periodo">Período temporal</label>
-          <select id="filtro-historial-periodo">
-            <option value="todos">Todo el historial</option>
-            <option value="semana">Última semana (7 días)</option>
-            <option value="mes">Este mes actual</option>
-          </select>
-        </div>
-      </div>
-    </section>
-
     <!-- Resumen de la búsqueda / filtros -->
     <section class="resumen" aria-label="Resumen de la búsqueda">
       <div class="resumen__total">
@@ -95,13 +66,19 @@
       </dl>
     </section>
 
-<!-- Dentro de historial.html, junto a la sección de filtros -->
+<!-- Filtros y respaldo del historial -->
 <section class="tarjeta-bloque" aria-label="Filtros y respaldo de historial">
   <div class="listado-seccion__encabezado">
     <h2 class="formulario-seccion__titulo" style="margin-bottom: 0;">Filtrar Historial</h2>
-    <button id="btn-exportar-json" class="landing__boton" style="padding: 8px 16px; font-size: 0.8rem;">
-         Generar respaldo
-    </button>
+    <div class="acciones-respaldo">
+      <button id="btn-importar-json" class="landing__boton landing__boton--secundario" style="padding: 8px 16px; font-size: 0.8rem;">
+        Importar respaldo
+      </button>
+      <button id="btn-exportar-json" class="landing__boton" style="padding: 8px 16px; font-size: 0.8rem;">
+        Generar respaldo
+      </button>
+    </div>
+    <input type="file" id="input-importar-json" accept=".json,application/json" hidden>
   </div>
   
   <div class="filtros-historial-grid" style="margin-top: 16px;">

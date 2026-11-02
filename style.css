@@ -288,6 +288,22 @@ body {
   background: var(--acento-hover);
 }
 
+.landing__boton--secundario {
+  background: transparent;
+  color: var(--tinta);
+}
+
+.landing__boton--secundario:hover {
+  background: var(--papel-linea);
+}
+
+.acciones-respaldo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .hero-tarjeta-ilustrativa {
   background: var(--blanco-tarjeta);
   border: 1px solid var(--papel-linea);

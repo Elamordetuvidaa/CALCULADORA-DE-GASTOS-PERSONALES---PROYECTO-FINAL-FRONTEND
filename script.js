@@ -233,10 +233,12 @@ if (listaHistorial) {
     window.location.href = "index.html";
   }
   const CLAVE_GASTOS = `mis-cuentas-gastos-${usuarioActivoEmail}`;
-  const gastosOriginales = cargarGastos(CLAVE_GASTOS);
+  let gastosOriginales = cargarGastos(CLAVE_GASTOS);
 
   const filtroCatEl = document.getElementById("filtro-historial-cat");
   const filtroPeriodoEl = document.getElementById("filtro-historial-periodo");
+  const botonImportarEl = document.getElementById("btn-importar-json");
+  const inputImportarEl = document.getElementById("input-importar-json");
   const totalFiltradoEl = document.getElementById("historial-total-filtrado");
   const cantidadHistorialEl = document.getElementById("historial-cantidad");
   const historialVacio = document.getElementById("historial-vacio");
@@ -249,6 +251,46 @@ if (listaHistorial) {
   // Escuchar cambios en los selectores de filtro
   if (filtroCatEl) filtroCatEl.addEventListener("change", aplicarFiltrosHistorial);
   if (filtroPeriodoEl) filtroPeriodoEl.addEventListener("change", aplicarFiltrosHistorial);
+
+  // Importar un respaldo JSON y agregar sus gastos al historial actual
+  if (botonImportarEl && inputImportarEl) {
+    botonImportarEl.addEventListener("click", () => inputImportarEl.click());
+
+    inputImportarEl.addEventListener("change", async () => {
+      const archivo = inputImportarEl.files[0];
+      if (!archivo) return;
+
+      try {
+        const contenido = await archivo.text();
+        const datos = JSON.parse(contenido);
+        const gastosImportados = extraerGastosDelRespaldo(datos);
+
+        if (gastosImportados.length === 0) {
+          alert("El archivo JSON no contiene gastos válidos para importar.");
+          return;
+        }
+
+        const idsExistentes = new Set(gastosOriginales.map(g => g.id));
+        const gastosNuevos = gastosImportados.filter(g => !idsExistentes.has(g.id));
+
+        if (gastosNuevos.length === 0) {
+          alert("Los gastos de este respaldo ya están registrados en tu historial.");
+          return;
+        }
+
+        gastosOriginales = gastosOriginales.concat(gastosNuevos).sort((a, b) => a.id - b.id);
+        guardarGastos(CLAVE_GASTOS, gastosOriginales);
+        aplicarFiltrosHistorial();
+
+        alert(`Se importaron ${gastosNuevos.length} gasto(s) correctamente.`);
+      } catch (error) {
+        console.error("Error al importar el respaldo:", error);
+        alert("No se pudo importar el respaldo. Verificá que el archivo sea un JSON válido.");
+      } finally {
+        inputImportarEl.value = "";
+      }
+    });
+  }
 
   function aplicarFiltrosHistorial() {
     const categoriaSeleccionada = filtroCatEl.value;
@@ -341,6 +383,39 @@ function cargarGastos(clave) {
 
 function guardarGastos(clave, gastos) {
   localStorage.setItem(clave, JSON.stringify(gastos));
+}
+
+// Acepta un respaldo completo ({ gastos: [...] }) o un arreglo directo de gastos
+function extraerGastosDelRespaldo(datos) {
+  let lista = [];
+  if (Array.isArray(datos)) {
+    lista = datos;
+  } else if (datos && Array.isArray(datos.gastos)) {
+    lista = datos.gastos;
+  }
+
+  const idsUsados = new Set();
+  let contador = 0;
+
+  return lista.reduce((validos, gasto) => {
+    if (!gasto || typeof gasto !== "object") return validos;
+
+    const concepto = typeof gasto.concepto === "string" ? gasto.concepto.trim() : "";
+    const categoria = typeof gasto.categoria === "string" ? gasto.categoria.trim() : "";
+    const monto = Number(gasto.monto);
+
+    if (!concepto || !categoria || !Number.isFinite(monto) || monto <= 0) return validos;
+
+    let id = Number(gasto.id);
+    if (!Number.isFinite(id) || id <= 0 || idsUsados.has(id)) {
+      id = Date.now() + contador;
+    }
+    contador += 1;
+    idsUsados.add(id);
+
+    validos.push({ id, concepto, categoria, monto });
+    return validos;
+  }, []);
 }
 
 function crearItemGasto(gasto) {
